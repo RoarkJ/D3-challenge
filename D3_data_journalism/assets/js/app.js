@@ -31,11 +31,11 @@ d3.csv("assets/data/data.csv").then(function(lifestyleData) {
 
     // Create scale functions
     var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(lifestyleData, d => d.income), d3.max(lifestyleData, d => d.income)])
+        .domain([d3.min(lifestyleData, d => d.income) - 1500, d3.max(lifestyleData, d => d.income)])
         .range([0, width]);
 
     var  yLinearScale = d3.scaleLinear()
-        .domain([d3.min(lifestyleData, d => d.obesity), d3.max(lifestyleData, d => d.obesity)])
+        .domain([d3.min(lifestyleData, d => d.obesity) - 1, d3.max(lifestyleData, d => d.obesity) + 1])
         .range([height, 0]);
 
     // Create axis function
@@ -57,32 +57,34 @@ d3.csv("assets/data/data.csv").then(function(lifestyleData) {
     .append("circle")
     .attr("cx", d => xLinearScale(d.income))
     .attr("cy", d => yLinearScale(d.obesity))
-    .attr("r", "15")
+    .attr("r", "12")
     .attr("fill", "#99e6ff")
-    .attr("opacity", ".7");
+    .attr("opacity", ".950");
 
     // Append Text in Circle
-    blubberGroup.selectAll()
+    chartGroup.selectAll()
     .data(lifestyleData)
     .enter()
     .append("text")
-    .attr("x", d => xLinearScale(d.income))
-    .attr("y", d => yLinearScale(d.obesity))
+    .attr("x", d => xLinearScale(d.income)-8)
+    .attr("y", d => yLinearScale(d.obesity)+4)
     .text( n => n.abbr)
-    .attr("font-size", "5px")
+    .attr("font-size", "12px")
 
     // Create axes labels
     chartGroup.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("x", 0 - margin.left + 40)
-        .attr("y", 0 - (height /2) + 40)
+        .attr("x", 0 - margin.left - 40)
         .attr("dy", "1em")
+        .attr("text-anchor", "middle")
         .attr("class", "axisText")
-        .text("Obesity Tendency ");
+        .text("Obesity Tendency")
+        .append('text');
 
     chartGroup.append("text")
-        .attr("transform", `translate(${width / 2.5}, ${height +margin.top+ 40} )`)
+        .attr("transform", `translate(${width / 2}, ${height +margin.top + 20} )`)
         .attr("class", "axisText")
+        .attr("text-anchor", "middle")
         .text("Income Effect");
 }).catch(function(error) {
     console.log(error);
