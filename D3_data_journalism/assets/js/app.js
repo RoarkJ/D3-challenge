@@ -6,7 +6,7 @@ var margin = {
     top: 20,
     right: 40,
     bottom: 60,
-    left: 100
+    left: 60
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -19,7 +19,7 @@ var svg = d3.select("#scatter")
 .attr("height", svgHeight);
 
 var chartGroup = svg.append("g")
-.attr("transform", `translate(${margin.left}, ${margin.top}`);
+.attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Import Data
 d3.csv("assets/data/data.csv").then(function(lifestyleData) {
@@ -73,13 +73,10 @@ d3.csv("assets/data/data.csv").then(function(lifestyleData) {
 
     // Create axes labels
     chartGroup.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", 0 - margin.left - 40)
-        .attr("dy", "1em")
+        .attr("transform", `translate(${-margin.left+20}, ${height/2}) rotate(-90)`)
         .attr("text-anchor", "middle")
         .attr("class", "axisText")
         .text("Obesity Tendency")
-        .append('text');
 
     chartGroup.append("text")
         .attr("transform", `translate(${width / 2}, ${height +margin.top + 20} )`)
